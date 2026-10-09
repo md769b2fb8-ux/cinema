@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Russia Club · Cinema & Television</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Cormorant+Garamond:wght@300;400;600&family=Cormorant:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: #F3E9D2;
+            font-family: 'Cormorant Garamond', serif;
+            color: #1F3D2E;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1F3D2E 0%, #2d5a42 100%);
+            padding: 60px 20px;
+            text-align: center;
+            border-bottom: 4px solid #B8863B;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            color: #B8863B;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            margin-bottom: 10px;
+            letter-spacing: 3px;
+        }
+
+        .header .subtitle {
+            font-size: 1.5rem;
+            color: #F3E9D2;
+            font-style: italic;
+            font-family: 'Cormorant', serif;
+        }
+
+        .header .russian-title {
+            font-size: 1.3rem;
+            color: #B8863B;
+            margin-top: 15px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        .branding-top {
+            text-align: center;
+            padding: 12px;
+            background: #7A2E22;
+            color: #F3E9D2;
+            font-family: 'Cormorant', serif;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+        }
+
+        .branding-top a {
+            color: #B8863B;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .branding-top a:hover { text-decoration: underline; }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 50px 20px;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            color: #1F3D2E;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #7A2E22;
+            font-style: italic;
+            margin-bottom: 50px;
+            font-family: 'Cormorant', serif;
+        }
+
+        .poster-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 35px;
+            margin-bottom: 60px;
+        }
+
+        .poster-card {
+            background: linear-gradient(145deg, #ffffff 0%, #f5f0e8 100%);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(31, 61, 46, 0.2);
+            border: 3px solid #B8863B;
+            cursor: pointer;
+            transition: all 0.4s ease;
+        }
+
+        .poster-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 45px rgba(31, 61, 46, 0.4);
+        }
+
+        .poster-image {
+            height: 280px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .poster-image::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at 30% 30%, rgba(184, 134, 59, 0.2) 0%, transparent 70%);
+        }
+
+        .poster-icon {
+            font-size: 6rem;
+            z-index: 1;
+            filter: drop-shadow(0 4px 12px rgba(0,0,0,0.4));
+        }
+
+        .poster-icon::after {
+            content: '🎬';
+        }
+
+        .poster-category {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            font-family: 'Cormorant', serif;
+            z-index: 2;
+        }
+
+        .poster-info {
+            padding: 25px;
+            text-align: center;
+        }
+
+        .poster-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: #1F3D2E;
+            margin-bottom: 8px;
+        }
+
+        .poster-year {
+            font-size: 1.1rem;
+            color: #7A2E22;
+            font-style: italic;
+            margin-bottom: 12px;
+            font-family: 'Cormorant', serif;
+        }
+
+        .poster-brief {
+            font-size: 1.05rem;
+            color: #555;
+            line-height: 1.5;
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        .poster-cta {
+            margin-top: 15px;
+            color: #B8863B;
+            font-weight: 600;
+            font-size: 1rem;
+            letter-spacing: 1px;
+        }
+
+        /* Category Colors */
+        .crime-series .poster-image { background: linear-gradient(135deg, #7A2E22 0%, #9a3a2a 100%); }
+        .crime-series .poster-category { background: #B8863B; color: #1F3D2E; }
+        .crime-series .poster-card { border-color: #7A2E22; }
+
+        .historical-drama .poster-image { background: linear-gradient(135deg, #1F3D2E 0%, #2d5a42 100%); }
+        .historical-drama .poster-category { background: #B8863B; color: #1F3D2E; }
+        .historical-drama .poster-card { border-color: #1F3D2E; }
+
+        .reality-show .poster-image { background: linear-gradient(135deg, #2E4A7A 0%, #3a5a9a 100%); }
+        .reality-show .poster-category { background: #B8863B; color: #1F3D2E; }
+        .reality-show .poster-card { border-color: #2E4A7A; }
+
+        .music-tv .poster-image { background: linear-gradient(135deg, #5A2E7A 0%, #7a3a9a 100%); }
+        .music-tv .poster-category { background: #B8863B; color: #1F3D2E; }
+        .music-tv .poster-card { border-color: #5A2E7A; }
+
+        .animation .poster-image { background: linear-gradient(135deg, #B8863B 0%, #d4a04a 100%); }
+        .animation .poster-category { background: #7A2E22; color: #F3E9D2; }
+        .animation .poster-card { border-color: #B8863B; }
+
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(31, 61, 46, 0.85);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-overlay.active { display: flex; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: linear-gradient(145deg, #ffffff 0%, #f5f0e8 100%);
+            border-radius: 15px;
+            max-width: 900px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            border: 4px solid #B8863B;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            animation: slideUp 0.4s ease;
+            position: relative;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-poster-wrapper {
+            display: flex;
+            justify-content: center;
+            padding: 30px 20px 20px;
+            background: linear-gradient(180deg, #f5f0e8 0%, #ffffff 100%);
+        }
+
+        .modal-poster-frame {
+            width: 320px;
+            height: 480px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+            border: 5px solid #B8863B;
+            position: relative;
+        }
+
+        .modal-poster-frame::before {
+            content: '';
+            position: absolute;
+            top: 8px; left: 8px; right: 8px; bottom: 8px;
+            border: 2px solid rgba(184, 134, 59, 0.3);
+            border-radius: 6px;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .modal-poster-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .modal-poster-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .modal-poster-placeholder-icon {
+            font-size: 5rem;
+            filter: drop-shadow(0 4px 12px rgba(0,0,0,0.4));
+        }
+
+        .modal-poster-placeholder-icon::after {
+            content: '🎬';
+        }
+
+        .modal-poster-placeholder-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: #1F3D2E;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: #B8863B;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #1F3D2E;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .modal-close:hover {
+            background: #d4a04a;
+            transform: rotate(90deg);
+        }
+
+        .modal-header-info {
+            padding: 25px 30px 15px;
+            text-align: center;
+            border-bottom: 2px solid rgba(184, 134, 59, 0.3);
+        }
+
+        .modal-poster-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: #1F3D2E;
+            margin-bottom: 8px;
+            letter-spacing: 2px;
+        }
+
+        .modal-poster-year {
+            font-size: 1.2rem;
+            color: #7A2E22;
+            font-style: italic;
+            font-family: 'Cormorant', serif;
+            margin-bottom: 12px;
+            letter-spacing: 3px;
+        }
+
+        .modal-poster-genre {
+            display: inline-block;
+            background: #B8863B;
+            color: #1F3D2E;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: 'Cormorant', serif;
+            letter-spacing: 1px;
+        }
+
+        .modal-body {
+            padding: 30px;
+        }
+
+        .modal-section {
+            margin-bottom: 25px;
+        }
+
+        .modal-section h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            color: #7A2E22;
+            margin-bottom: 12px;
+            border-bottom: 3px solid #B8863B;
+            padding-bottom: 8px;
+        }
+
+        .modal-section p {
+            font-size: 1.15rem;
+            line-height: 1.8;
+            color: #333;
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        .modal-facts {
+            background: #F3E9D2;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #B8863B;
+        }
+
+        .modal-facts ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .modal-facts li {
+            padding: 10px 0;
+            font-size: 1.1rem;
+            color: #1F3D2E;
+            border-bottom: 1px solid rgba(184, 134, 59, 0.3);
+        }
+
+        .modal-facts li:last-child { border-bottom: none; }
+
+        .modal-facts li::before {
+            content: '🎬 ';
+            margin-right: 10px;
+        }
+
+        .branding-footer {
+            text-align: center;
+            padding: 25px;
+            background: #7A2E22;
+            color: #F3E9D2;
+            font-family: 'Cormorant', serif;
+            font-size: 1.1rem;
+        }
+
+        .branding-footer a {
+            color: #B8863B;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .branding-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2.5rem; }
+            .header .subtitle { font-size: 1.2rem; }
+            .poster-grid { grid-template-columns: 1fr; gap: 25px; }
+            .modal-poster-frame { width: 260px; height: 400px; }
+            .modal-poster-title { font-size: 2rem; }
+            .modal-body { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="branding-top">
+        🎬 Russia Club · <a href="https://t.me/eng_with_betty" target="_blank">@eng_with_betty</a> · Telegram
+    </div>
+
+    <div class="header">
+        <h1>Cinema & Television</h1>
+        <p class="subtitle">Screen Stories · Russian Culture</p>
+        <p class="russian-title">Кино и Телевидение</p>
+    </div>
+
+    <div class="container">
+        <h2 class="section-title">Russian Screen Collection</h2>
+        <p class="section-subtitle">Click on any poster to discover the story</p>
+
+        <div class="poster-grid">
+
+            <!-- BRIGADA -->
+            <div class="poster-card crime-series" onclick="openModal('brigada')">
+                <div class="poster-image">
+                    <span class="poster-category">Crime Series</span>
+                    <span class="poster-icon"></span>
+                </div>
+                <div class="poster-info">
+                    <h3 class="poster-title">Brigada</h3>
+                    <p class="poster-year">2002 · Crime Drama</p>
+                    <p class="poster-brief">A group of friends becomes a gang of criminals in post-Soviet Russia.</p>
+                    <p class="poster-cta">→ Read More</p>
+                </div>
+            </div>
+
+            <!-- THE MATCH -->
+            <div class="poster-card historical-drama" onclick="openModal('match')">
+                <div class="poster-image">
+                    <span class="poster-category">Historical Drama</span>
+                    <span class="poster-icon"></span>
+                </div>
+                <div class="poster-info">
+                    <h3 class="poster-title">The Match</h3>
+                    <p class="poster-year">2012 · War Drama</p>
+                    <p class="poster-brief">A football match between Dinamo Kiev and German fascists in 1942.</p>
+                    <p class="poster-cta">→ Read More</p>
+                </div>
+            </div>
+
+            <!-- GOLOS -->
+            <div class="poster-card reality-show" onclick="openModal('golos')">
+                <div class="poster-image">
+                    <span class="poster-category">Reality Show</span>
+                    <span class="poster-icon"></span>
+                </div>
+                <div class="poster-info">
+                    <h3 class="poster-title">Golos (The Voice)</h3>
+                    <p class="poster-year">2012–present · Talent Show</p>
+                    <p class="poster-brief">Russia's biggest singing competition with blind auditions.</p>
+                    <p class="poster-cta">→ Read More</p>
+                </div>
+            </div>
+
+            <!-- MTV -->
+            <div class="poster-card music-tv" onclick="openModal('mtv')">
+                <div class="poster-image">
+                    <span class="poster-category">Music TV</span>
+                    <span class="poster-icon"></span>
+                </div>
+                <div class="poster-info">
+                    <h3 class="poster-title">MTV</h3>
+                    <p class="poster-year">1981–present · Music Channel</p>
+                    <p class="poster-brief">The first channel to show non-stop music videos worldwide.</p>
+                    <p class="poster-cta">→ Read More</p>
+                </div>
+            </div>
+
+            <!-- JUST YOU WAIT -->
+            <div class="poster-card animation" onclick="openModal('nupogodi')">
+                <div class="poster-image">
+                    <span class="poster-category">Animation</span>
+                    <span class="poster-icon"></span>
+                </div>
+                <div class="poster-info">
+                    <h3 class="poster-title">Just You Wait!</h3>
+                    <p class="poster-year">1969–present · Cartoon</p>
+                    <p class="poster-brief">The legendary chase between Wolf and Hare in Soviet animation.</p>
+                    <p class="poster-cta">→ Read More</p>
+                </div>
+            </div>
+
+            <!-- THREE CATS -->
+            <div class="poster-card animation" onclick="openModal('threecats')">
+                <div class="poster-image">
+                    <span class="poster-category">Animation</span>
+                    <span class="poster-icon"></span>
+                </div>
+                <div class="poster-info">
+                    <h3 class="poster-title">The Three Cats</h3>
+                    <p class="poster-year">2015–present · Kids Cartoon</p>
+                    <p class="poster-brief">Three cute kittens solve problems and go on adventures.</p>
+                    <p class="poster-cta">→ Read More</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- MODAL -->
+    <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeModal()">✕</button>
+            
+            <div class="modal-poster-wrapper">
+                <div class="modal-poster-frame" id="modalPosterFrame"></div>
+            </div>
+            
+            <div class="modal-header-info">
+                <h2 class="modal-poster-title" id="modalTitle">Title</h2>
+                <p class="modal-poster-year" id="modalYear">Year</p>
+                <span class="modal-poster-genre" id="modalGenre">Genre</span>
+            </div>
+            
+            <div class="modal-body">
+                <div class="modal-section">
+                    <h3>About</h3>
+                    <p id="modalAbout">Description</p>
+                </div>
+                <div class="modal-section">
+                    <h3>Key Facts</h3>
+                    <div class="modal-facts">
+                        <ul id="modalFacts"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="branding-footer">
+         Russia Club · @eng_with_betty · <a href="https://t.me/eng_with_betty" target="_blank">Telegram</a>
+    </div>
+
+    <script>
+        const content = {
+            brigada: {
+                poster: 'images/brigada.jpg',
+                title: 'Brigada',
+                year: '2002',
+                genre: 'Crime Drama Series',
+                bgColor: 'linear-gradient(135deg, #7A2E22 0%, #9a3a2a 100%)',
+                about: 'Russian TV has no shortage of crime shows, but one massive hit was Brigada. The fifteen-part mini-series did not focus on the police, as you might expect, but on a group of friends who became a gang of criminals. The series followed them from 1989 to 2000 as they made their way through the shadowy world of organised crime. After receiving great reviews, there were demands for another series, but, so far, the story has only been continued in novels.',
+                facts: [
+                    '15 episodes in the original mini-series',
+                    'Follows characters from 1989 to 2000',
+                    'Focuses on friends turned criminals, not police',
+                    'Story continued in novels after the series',
+                    'One of the most popular Russian crime dramas'
+                ]
+            },
+            match: {
+                poster: 'images/match.jpg',
+                title: 'The Match',
+                year: '2012',
+                genre: 'Historical Drama',
+                bgColor: 'linear-gradient(135deg, #1F3D2E 0%, #2d5a42 100%)',
+                about: 'In May 2012, a new Russian film appeared on the screen: The Match, starring popular Russian actors Elizaveta Boyarskaya and Sergey Bezrukov. It is a drama about the football match that took place in Kiev in 1942 between Dinamo Kiev and the German fascists\' team. The film is a patriotic action movie. Such films are popular with audiences who are interested in the past. Historical dramas can be compelling because people from earlier centuries look different, think differently and act differently.',
+                facts: [
+                    'Stars Sergey Bezrukov and Elizaveta Boyarskaya',
+                    'Set in Kiev during World War II (1942)',
+                    'About a football match between Dinamo Kiev and German team',
+                    'Sergey Bezrukov learned to play football professionally',
+                    'The ending is tragic, although the Soviet team wins'
+                ]
+            },
+            golos: {
+                poster: 'images/golos.jpg',
+                title: 'Golos (The Voice Russia)',
+                year: '2012–present',
+                genre: 'Reality Talent Show',
+                bgColor: 'linear-gradient(135deg, #2E4A7A 0%, #3a5a9a 100%)',
+                about: 'Golos (The Voice) is a reality television singing contest. It is based on the reality singing show The Voice of Holland, created by Dutch television producer John de Mol. The Dutch show started in September 2010. In Russia, Golos premiered in October 2012 on Russia\'s Channel One. The format differs from a traditional talent show. Many contestants are professional vocalists and represent a broad range of musical genres.',
+                facts: [
+                    'Based on The Voice of Holland format',
+                    'Premiered in Russia in October 2012',
+                    'Features blind auditions with rotating chairs',
+                    'Four phases: blind audition, battles, knockouts, live shows',
+                    'Winner receives a recording contract'
+                ]
+            },
+            mtv: {
+                poster: 'images/mtv.jpg',
+                title: 'MTV: Music Television',
+                year: '1981–present',
+                genre: 'Music Channel',
+                bgColor: 'linear-gradient(135deg, #5A2E7A 0%, #7a3a9a 100%)',
+                about: 'MTV stands for Music Television. It is a cable television channel located in New York City and was the first channel to show non-stop music videos. MTV first started broadcasting on August 1, 1981. It went to air at 12:01 am with the words "Ladies and gentlemen, rock and roll". The first music video shown on MTV was "Video Killed the Radio Star" by The Buggles. MTV became very popular during the 80s and the 90s.',
+                facts: [
+                    'Launched on August 1, 1981 at 12:01 am',
+                    'First video: "Video Killed the Radio Star" by The Buggles',
+                    'VJs (video jockeys) introduced the videos',
+                    'Helped launch careers of Madonna, Bon Jovi and others',
+                    'Celebrated 25th anniversary on August 1, 2006'
+                ]
+            },
+            nupogodi: {
+                poster: 'images/nupogodi.jpg',
+                title: 'Just You Wait! (Nu, pogodi!)',
+                year: '1969–present',
+                genre: 'Animated Series',
+                bgColor: 'linear-gradient(135deg, #B8863B 0%, #d4a04a 100%)',
+                about: 'Just You Wait! (Nu, pogodi!) is a popular Soviet/Russian series of cartoons. The first film appeared in 1969. Its director was Vyacheslav Kotyonochkin. The film language is Russian, but there is very little speech in it. The main characters are a big, foolish and aggressive Wolf, who is also a funny fellow, and a clever and brave Hare. The Hare is full of joy and imagination and always makes fun of his enemy.',
+                facts: [
+                    'First film released in 1969',
+                    'Directed by Vyacheslav Kotyonochkin',
+                    'Very little dialogue — mostly visual comedy',
+                    'Wolf plays guitar and rides a motorbike',
+                    'Wolf never manages to catch the Hare'
+                ]
+            },
+            threecats: {
+                poster: 'images/threecats.jpg',
+                title: 'The Three Cats',
+                year: '2015–present',
+                genre: 'Children\'s Cartoon',
+                bgColor: 'linear-gradient(135deg, #B8863B 0%, #d4a04a 100%)',
+                about: 'The Three Cats is a popular Russian cartoon about three cute kittens, their family and friends. They like adventures. With the help of their caring parents, the kittens solve problems. Cookie is active, brave and clever. Pudding, the eldest kitten, is very knowledgeable. Candy is the youngest child. She is sweet and friendly, but sometimes naughty.',
+                facts: [
+                    'Three main characters: Cookie, Pudding, and Candy',
+                    'Cookie is the middle child — active and sporty',
+                    'Pudding is the eldest — loves puzzles and sweets',
+                    'Candy is the youngest — sweet but sometimes bossy',
+                    'Popular with children aged 3–7'
+                ]
+            }
+        };
+
+        function openModal(id) {
+            const data = content[id];
+            document.getElementById('modalTitle').textContent = data.title;
+            document.getElementById('modalYear').textContent = data.year;
+            document.getElementById('modalGenre').textContent = data.genre;
+            document.getElementById('modalAbout').textContent = data.about;
+            
+            const posterFrame = document.getElementById('modalPosterFrame');
+            if (data.poster) {
+                posterFrame.innerHTML = `<img src="${data.poster}" alt="${data.title} poster" class="modal-poster-image" onerror="this.parentElement.innerHTML='<div class=\'modal-poster-placeholder\' style=\'background: ${data.bgColor};\'><span class=\'modal-poster-placeholder-icon\'></span><span class=\'modal-poster-placeholder-title\'>${data.title}</span></div>'">`;
+            } else {
+                posterFrame.innerHTML = `<div class="modal-poster-placeholder" style="background: ${data.bgColor};"><span class="modal-poster-placeholder-icon"></span><span class="modal-poster-placeholder-title">${data.title}</span></div>`;
+            }
+            
+            const factsList = document.getElementById('modalFacts');
+            factsList.innerHTML = '';
+            data.facts.forEach(fact => {
+                const li = document.createElement('li');
+                li.textContent = fact;
+                factsList.appendChild(li);
+            });
+
+            document.getElementById('modalOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(event) {
+            if (!event || event.target === document.getElementById('modalOverlay') || event.target.classList.contains('modal-close')) {
+                document.getElementById('modalOverlay').classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+
+</body>
+</html>
